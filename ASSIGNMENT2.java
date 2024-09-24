@@ -57,22 +57,16 @@ public class ASSIGNMENT2{
         }
         return decimalToHexadecimal(num / 16) + Integer.toHexString(num % 16);
     }
-
-    public static int findMissingNumber(int num) {
-        for (int i = 1; i <= num; i++) {
-            boolean found = false;
-            for (int j = 1; j <= num; j++) {
-                if (i == j) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                return i;
-            }
+    public static int findMissingNumber(int[] arr, int n) {
+        if (n == 0) {
+            return 1;
+        } else if (arr[n-1] != n) {
+            return n; 
+        } else {
+            return findMissingNumber(arr, n-2); 
         }
-        return num + 1;
     }
+    
 
 public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
@@ -140,9 +134,15 @@ public static void main(String[] args) {
             System.out.println("Hexadecimal representation: " + decimalToHexadecimal(num));
             break;
         case 8:
-            System.out.println("Enter a number:");
-            num = scanner.nextInt();
-            System.out.println("Smaller positive missing number: " + findMissingNumber(num));
+        System.out.print("Enter the size of the array (n): ");
+        int number = scanner.nextInt();
+        int[] arr = new int[ number-1]; // create an array of size n-1
+        System.out.print("Enter the numbers (separated by spaces): ");
+        for (int i = 0; i <  number-1; i++) {
+            arr[i] = scanner.nextInt();
+        }
+        int missingNumber = findMissingNumber(arr,  number);
+        System.out.println("The missing number is: " + missingNumber);
             break;
         default:
             System.out.println("Invalid choice");
