@@ -3,59 +3,76 @@ import java.util.Scanner;
 public class ASSIGNMENT5 {
 
 	    // Iterative Linear Search
-	    public static int linearSearchIterative(int[] arr, int target) {
-	        for (int i = 0; i < arr.length; i++) {
-	            if (arr[i] == target) {
-	                return i; // Return the index
-	            }
-	        }
-	        return -1; // Element not found
-	    }
-
-	    // Recursive Linear Search
-	    public static int linearSearchRecursive(int[] arr, int target, int index) {
-	        if (index >= arr.length) {
-	            return -1; // Element not found
-	        }
-	        if (arr[index] == target) {
-	            return index; // Return the index
-	        }
-	        return linearSearchRecursive(arr, target, index + 1); // Recur for next index
-	    }
+	   public static int linearSearchIterative(int[] arr, int target) {
+                int comparisons = 0; // Initialize comparison counter
+                for (int i = 0; i < arr.length; i++) {
+                    comparisons++; // Increment counter for each comparison
+                    if (arr[i] == target) {
+                        System.out.println("Comparisons: " + comparisons);
+                        return i; // Return the index
+                    }
+                }
+                System.out.println("Comparisons: " + comparisons);
+                return -1; // Element not found
+            }
+    
+	    public static int linearSearchRecursive(int[] arr, int target, int index, int comparisons) {
+                if (index >= arr.length) {
+                    System.out.println("Comparisons: " + comparisons);
+                    return -1; // Element not found
+                }
+                comparisons++; // Increment counter for each comparison
+                if (arr[index] == target) {
+                    System.out.println("Comparisons: " + comparisons);
+                    return index; // Return the index
+                }
+                return linearSearchRecursive(arr, target, index + 1, comparisons); // Recur for next index
+            }
 
 	    // Iterative Binary Search
 	    public static int binarySearchIterative(int[] arr, int target) {
-	        int left = 0;
-	        int right = arr.length - 1;
-	        while (left <= right) {
-	            int mid = left + (right - left) / 2;
-	            if (arr[mid] == target) {
-	                return mid; // Return the index
-	            }
-	            if (arr[mid] < target) {
-	                left = mid + 1; // Search in the right half
-	            } else {
-	                right = mid - 1; // Search in the left half
-	            }
-	        }
-	        return -1; // Element not found
-	    }
+                int left = 0;
+                int right = arr.length - 1;
+                int comparisons = 0; // Initialize comparison counter
+                
+                while (left <= right) {
+                    comparisons++; // Increment counter for each comparison
+                    int mid = left + (right - left) / 2;
+                    
+                    if (arr[mid] == target) {
+                        System.out.println("Comparisons: " + comparisons);
+                        return mid; // Return the index
+                    }
+                    if (arr[mid] < target) {
+                        left = mid + 1; // Search in the right half
+                    } else {
+                        right = mid - 1; // Search in the left half
+                    }
+                }
+                System.out.println("Comparisons: " + comparisons);
+                return -1; // Element not found
+            }
 
 	    // Recursive Binary Search
-	    public static int binarySearchRecursive(int[] arr, int target, int left, int right) {
-	        if (left > right) {
-	            return -1; // Element not found
-	        }
-	        int mid = left + (right - left) / 2;
-	        if (arr[mid] == target) {
-	            return mid; // Return the index
-	        }
-	        if (arr[mid] < target) {
-	            return binarySearchRecursive(arr, target, mid + 1, right); // Search in the right half
-	        } else {
-	            return binarySearchRecursive(arr, target, left, mid - 1); // Search in the left half
-	        }
-	    }
+	   public static int binarySearchRecursive(int[] arr, int target, int left, int right, int comparisons) {
+                if (left > right) {
+                    System.out.println("Comparisons: " + comparisons);
+                    return -1; // Element not found
+                }
+                
+                comparisons++; // Increment counter for each comparison
+                int mid = left + (right - left) / 2;
+                
+                if (arr[mid] == target) {
+                    System.out.println("Comparisons: " + comparisons);
+                    return mid; // Return the index
+                }
+                if (arr[mid] < target) {
+                    return binarySearchRecursive(arr, target, mid + 1, right, comparisons); // Search in the right half
+                } else {
+                    return binarySearchRecursive(arr, target, left, mid - 1, comparisons); // Search in the left half
+                }
+            }
 
 	    public static void main(String[] args) {
 	        Scanner scanner = new Scanner(System.in);
@@ -79,13 +96,13 @@ public class ASSIGNMENT5 {
 	                result = linearSearchIterative(arr, target);
 	                break;
 	            case 2:
-	                result = linearSearchRecursive(arr, target, 0);
+	                result = linearSearchRecursive(arr, target, 0 , result);
 	                break;
 	            case 3:
 	                result = binarySearchIterative(arr, target);
 	                break;
 	            case 4:
-	                result = binarySearchRecursive(arr, target, 0, arr.length - 1);
+	                result = binarySearchRecursive(arr, target, 0, arr.length - 1, result);
 	                break;
 	            default:
 	                System.out.println("Invalid choice");
